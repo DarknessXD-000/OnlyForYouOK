@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Rose Day 🌹</title>
+<title>Rose Day Akshi Cutie🌹</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Aesthetic Font -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -51,12 +50,13 @@ body{
   z-index:2;
 }
 
-/* rose particles */
+/* falling roses */
 .petal{
   position:absolute;
   top:-30px;
   font-size:24px;
   opacity:0.7;
+  pointer-events:none;
   animation:fall linear infinite;
 }
 
@@ -64,6 +64,20 @@ body{
   to{
     transform:translateY(110vh) rotate(360deg);
   }
+}
+
+/* clickable rose */
+.click-rose{
+  position:absolute;
+  font-size:40px;
+  cursor:pointer;
+  z-index:3;
+  animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(0)}
+  to{transform:scale(1)}
 }
 
 /* tap overlay */
@@ -95,26 +109,28 @@ body{
   to feel this moment
 </div>
 
-<!-- CENTER HEART -->
+<!-- CENTER -->
 <div class="heart">❤️</div>
 
 <div class="text">
   Happy Rose Day<br>
-  <strong>jasdh</strong> 🌹
+  <strong>Akshi</strong> 🌹<br>
+  <small>(Tap the roses)</small>
 </div>
 
 <script>
-/* start music */
+/* music start */
 const overlay=document.getElementById("overlay");
 const music=document.getElementById("music");
 
 overlay.addEventListener("click",()=>{
   music.play();
   overlay.style.display="none";
+  spawnRose();
 });
 
-/* rose rain */
-function createRose(){
+/* background rose rain */
+function rain(){
   const r=document.createElement("div");
   r.className="petal";
   r.innerHTML="🌹";
@@ -123,7 +139,25 @@ function createRose(){
   document.body.appendChild(r);
   setTimeout(()=>r.remove(),8000);
 }
-setInterval(createRose,250);
+setInterval(rain,250);
+
+/* interactive rose */
+function spawnRose(){
+  const rose=document.createElement("div");
+  rose.className="click-rose";
+  rose.innerHTML="🌹";
+
+  const size=40;
+  rose.style.left=Math.random()*(window.innerWidth-size)+"px";
+  rose.style.top=Math.random()*(window.innerHeight-size)+"px";
+
+  rose.addEventListener("click",()=>{
+    rose.remove();
+    spawnRose();
+  });
+
+  document.body.appendChild(rose);
+}
 </script>
 
 </body>
