@@ -15,7 +15,7 @@
 
 body{
   height:100vh;
-  background: linear-gradient(135deg,#ff416c,#ff4b2b);
+  background: radial-gradient(circle at top,#ff5f8d,#a10035);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -23,53 +23,61 @@ body{
   color:white;
 }
 
-/* container */
+/* glass container */
 .container{
-  background:rgba(0,0,0,0.25);
-  padding:40px;
-  border-radius:20px;
-  max-width:700px;
+  background:rgba(0,0,0,0.3);
+  padding:50px;
+  border-radius:25px;
   text-align:center;
-  box-shadow:0 0 40px rgba(0,0,0,0.4);
-  animation:fadeIn 2s ease;
+  box-shadow:0 0 50px rgba(0,0,0,0.5);
 }
 
+/* title */
 h1{
   font-size:3rem;
+  margin-bottom:30px;
 }
 h1 span{
   color:#ffd1dc;
 }
 
-.rose{
-  font-size:4rem;
-  margin:20px 0;
-  animation:float 3s ease-in-out infinite;
+/* 3D rose */
+.scene{
+  width:200px;
+  height:200px;
+  margin:0 auto 30px;
+  perspective:800px;
 }
 
+.rose3d{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  animation:spin 6s linear infinite;
+  font-size:120px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+@keyframes spin{
+  0%{transform:rotateY(0deg) rotateX(0deg)}
+  100%{transform:rotateY(360deg) rotateX(360deg)}
+}
+
+/* text */
 #typing{
   font-size:1.4rem;
   line-height:1.8;
-  min-height:140px;
+  min-height:120px;
 }
 
-/* animations */
-@keyframes float{
-  0%{transform:translateY(0)}
-  50%{transform:translateY(-15px)}
-  100%{transform:translateY(0)}
-}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(0.9)}
-  to{opacity:1;transform:scale(1)}
-}
-
-/* rose petals */
+/* petals */
 .petal{
   position:absolute;
   top:-20px;
-  font-size:20px;
+  font-size:22px;
   opacity:0.7;
   animation:fall linear infinite;
 }
@@ -79,91 +87,73 @@ h1 span{
     transform:translateY(110vh) rotate(360deg);
   }
 }
-
-/* play button */
-#playBtn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  padding:12px 18px;
-  border:none;
-  border-radius:30px;
-  background:#ff5c8a;
-  color:white;
-  font-size:14px;
-  cursor:pointer;
-  box-shadow:0 0 15px rgba(0,0,0,0.3);
-}
 </style>
 </head>
 
 <body>
 
-<!-- Background music (Until I Found You) -->
-<iframe id="yt"
-  width="0" height="0"
-  src="https://www.youtube.com/embed/qV5lzRHrGeg?autoplay=1&loop=1&playlist=qV5lzRHrGeg"
-  allow="autoplay">
-</iframe>
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <div class="container">
   <h1>Happy Rose Day <span>jasdh</span> 🌹</h1>
-  <div class="rose">🌹</div>
+
+  <div class="scene">
+    <div class="rose3d">🌹</div>
+  </div>
+
   <div id="typing"></div>
 </div>
 
-<button id="playBtn" onclick="enableMusic()">▶ Play Music</button>
-
 <script>
+/* force autoplay */
+window.addEventListener("click",()=>{
+  const music=document.getElementById("bgMusic");
+  music.play();
+});
+
 /* typing text */
-const text = [
+const lines=[
   "Aaj Rose Day hai…",
   "Rose sirf flower nahi hota.",
   "Rose wo feeling hoti hai jo bina bole sab keh jaaye.",
-  "Bilkul tumhari tarah, jasdh.",
-  "You are not just a rose.",
-  "You are my favorite one. 🌹❤️"
+  "Aur tum, jasdh…",
+  "Tum meri favorite rose ho. 🌹❤️"
 ];
 
-let i = 0, j = 0;
-const speed = 50;
-const typingDiv = document.getElementById("typing");
+let i=0,j=0;
+const speed=45;
+const box=document.getElementById("typing");
 
 function type(){
-  if(i < text.length){
-    if(j < text[i].length){
-      typingDiv.innerHTML += text[i].charAt(j);
+  if(i<lines.length){
+    if(j<lines[i].length){
+      box.innerHTML+=lines[i][j];
       j++;
-      setTimeout(type, speed);
-    } else {
-      typingDiv.innerHTML += "<br><br>";
-      j = 0;
+      setTimeout(type,speed);
+    }else{
+      box.innerHTML+="<br><br>";
+      j=0;
       i++;
-      setTimeout(type, 600);
+      setTimeout(type,600);
     }
   }
 }
 type();
 
-/* rose petals */
-function createPetal(){
-  const petal = document.createElement("div");
-  petal.className = "petal";
-  petal.innerHTML = "🌹";
-  petal.style.left = Math.random() * 100 + "vw";
-  petal.style.animationDuration = (3 + Math.random()*5) + "s";
-  document.body.appendChild(petal);
-
-  setTimeout(()=>petal.remove(),8000);
+/* falling petals */
+function petal(){
+  const p=document.createElement("div");
+  p.className="petal";
+  p.innerHTML="🌹";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),8000);
 }
-setInterval(createPetal,300);
-
-/* music enable for browsers */
-function enableMusic(){
-  const iframe = document.getElementById("yt");
-  iframe.src += "";
-  document.getElementById("playBtn").style.display="none";
-}
+setInterval(petal,300);
 </script>
 
 </body>
