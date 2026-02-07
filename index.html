@@ -1,146 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Akshi 🌹</title>
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Montserrat:wght@300&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            background: radial-gradient(circle at center, #2c0000 0%, #000000 100%);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
+<meta charset="UTF-8">
+<title>Happy Rose Day 🌹</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Music Start Screen */
-        #entry-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 999; display: flex;
-            justify-content: center; align-items: center; cursor: pointer;
-        }
-        .start-text {
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 5px; color: #ff4d6d;
-            border: 1px solid #ff4d6d; padding: 15px 30px;
-            animation: pulse 1.5s infinite;
-        }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-        /* Aesthetic Text */
-        .header {
-            text-align: center; z-index: 10;
-            margin-bottom: 20px; pointer-events: none;
-        }
-        h1 {
-            font-family: 'Parisienne', cursive;
-            font-size: 5rem; color: #ff4d6d;
-            text-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
-        }
-        p {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1rem; color: #ffb3c1;
-            letter-spacing: 3px; text-transform: uppercase;
-        }
+body{
+  height:100vh;
+  background: linear-gradient(135deg,#ff416c,#ff4b2b);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  color:white;
+}
 
-        /* CSS Rose Drawing */
-        .rose {
-            position: relative; width: 100px; height: 100px;
-            animation: float 4s ease-in-out infinite;
-        }
-        .petal-container { position: relative; width: 100px; height: 100px; }
-        .p-center {
-            position: absolute; width: 40px; height: 40px; background: #9b0000;
-            border-radius: 50% 50% 10% 50%; top: 30px; left: 30px; z-index: 5;
-        }
-        .p-side {
-            position: absolute; width: 60px; height: 70px; background: #e00037;
-            border-radius: 50%; opacity: 0.9; box-shadow: inset 0 0 15px #000;
-        }
-        .p1 { transform: rotate(45deg); top: 10px; left: 10px; }
-        .p2 { transform: rotate(-45deg); top: 10px; left: 30px; }
-        .p3 { transform: rotate(180deg); top: 30px; left: 20px; }
-        
-        .stem {
-            position: absolute; width: 4px; height: 150px;
-            background: linear-gradient(#0a3d00, #000);
-            left: 48px; top: 80px; border-radius: 5px;
-        }
+/* container */
+.container{
+  background:rgba(0,0,0,0.25);
+  padding:40px;
+  border-radius:20px;
+  max-width:700px;
+  text-align:center;
+  box-shadow:0 0 40px rgba(0,0,0,0.4);
+  animation:fadeIn 2s ease;
+}
 
-        /* Floating Petals Effect */
-        .falling {
-            position: absolute; background: #ff4d6d;
-            border-radius: 50% 0 50% 0; pointer-events: none;
-            animation: fall linear infinite;
-        }
+h1{
+  font-size:3rem;
+}
+h1 span{
+  color:#ffd1dc;
+}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-30px); }
-        }
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
-        @keyframes pulse {
-            0% { opacity: 0.5; } 100% { opacity: 1; }
-        }
-    </style>
+.rose{
+  font-size:4rem;
+  margin:20px 0;
+  animation:float 3s ease-in-out infinite;
+}
+
+#typing{
+  font-size:1.4rem;
+  line-height:1.8;
+  min-height:140px;
+}
+
+/* animations */
+@keyframes float{
+  0%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
+  100%{transform:translateY(0)}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(0.9)}
+  to{opacity:1;transform:scale(1)}
+}
+
+/* rose petals */
+.petal{
+  position:absolute;
+  top:-20px;
+  font-size:20px;
+  opacity:0.7;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+  }
+}
+
+/* play button */
+#playBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  padding:12px 18px;
+  border:none;
+  border-radius:30px;
+  background:#ff5c8a;
+  color:white;
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(0,0,0,0.3);
+}
+</style>
 </head>
+
 <body>
 
-    <div id="entry-overlay" onclick="init()">
-        <div class="start-text">FOR AKSHI (CLICK)</div>
-    </div>
+<!-- Background music (Until I Found You) -->
+<iframe id="yt"
+  width="0" height="0"
+  src="https://www.youtube.com/embed/qV5lzRHrGeg?autoplay=1&loop=1&playlist=qV5lzRHrGeg"
+  allow="autoplay">
+</iframe>
 
-    <div class="header">
-        <h1>Happy Rose Day, Akshi</h1>
-        <p>Until I Found Her</p>
-    </div>
+<div class="container">
+  <h1>Happy Rose Day <span>jasdh</span> 🌹</h1>
+  <div class="rose">🌹</div>
+  <div id="typing"></div>
+</div>
 
-    <div class="rose">
-        <div class="petal-container">
-            <div class="p-center"></div>
-            <div class="p-side p1"></div>
-            <div class="p-side p2"></div>
-            <div class="p-side p3"></div>
-        </div>
-        <div class="stem"></div>
-    </div>
+<button id="playBtn" onclick="enableMusic()">▶ Play Music</button>
 
-    <audio id="player" loop>
-        <source src="https://files.catbox.moe/kivl3f.mp3" type="audio/mpeg">
-    </audio>
+<script>
+/* typing text */
+const text = [
+  "Aaj Rose Day hai…",
+  "Rose sirf flower nahi hota.",
+  "Rose wo feeling hoti hai jo bina bole sab keh jaaye.",
+  "Bilkul tumhari tarah, jasdh.",
+  "You are not just a rose.",
+  "You are my favorite one. 🌹❤️"
+];
 
-    <script>
-        function init() {
-            document.getElementById('entry-overlay').style.display = 'none';
-            const audio = document.getElementById('player');
-            audio.volume = 0.5;
-            audio.play().catch(e => console.log("Music blocked, need interaction"));
-            
-            spawnPetals();
-        }
+let i = 0, j = 0;
+const speed = 50;
+const typingDiv = document.getElementById("typing");
 
-        function spawnPetals() {
-            setInterval(() => {
-                const p = document.createElement('div');
-                p.className = 'falling';
-                const size = Math.random() * 10 + 5;
-                p.style.width = size + 'px';
-                p.style.height = size + 10 + 'px';
-                p.style.left = Math.random() * 100 + 'vw';
-                p.style.top = '-20px';
-                p.style.opacity = Math.random();
-                p.style.animationDuration = Math.random() * 5 + 3 + 's';
-                document.body.appendChild(p);
-                setTimeout(() => p.remove(), 8000);
-            }, 300);
-        }
-    </script>
+function type(){
+  if(i < text.length){
+    if(j < text[i].length){
+      typingDiv.innerHTML += text[i].charAt(j);
+      j++;
+      setTimeout(type, speed);
+    } else {
+      typingDiv.innerHTML += "<br><br>";
+      j = 0;
+      i++;
+      setTimeout(type, 600);
+    }
+  }
+}
+type();
+
+/* rose petals */
+function createPetal(){
+  const petal = document.createElement("div");
+  petal.className = "petal";
+  petal.innerHTML = "🌹";
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.animationDuration = (3 + Math.random()*5) + "s";
+  document.body.appendChild(petal);
+
+  setTimeout(()=>petal.remove(),8000);
+}
+setInterval(createPetal,300);
+
+/* music enable for browsers */
+function enableMusic(){
+  const iframe = document.getElementById("yt");
+  iframe.src += "";
+  document.getElementById("playBtn").style.display="none";
+}
+</script>
+
 </body>
 </html>
