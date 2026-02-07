@@ -1,128 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Akshi 🌹</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         body {
+            background-color: #050000;
             margin: 0;
-            padding: 0;
-            background: radial-gradient(circle, #2b0000 0%, #000000 100%);
-            height: 100vh;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
             font-family: 'Great Vibes', cursive;
         }
 
-        /* The Main Realistic Rose */
-        .rose-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            animation: float 4s ease-in-out infinite;
-            z-index: 5;
-            filter: drop-shadow(0 0 20px rgba(255, 0, 68, 0.6));
+        .container { position: relative; }
+
+        /* The CSS Rose */
+        .rose { position: relative; width: 100px; height: 100px; transform: scale(1.5); }
+        
+        .petal {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            background: radial-gradient(circle, #ff0044, #8b0000);
+            border-radius: 50% 50% 10% 10%;
+            transform-origin: bottom center;
+            opacity: 0.9;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .rose-container img {
-            width: 100%;
-            height: auto;
+        /* Making petals in a spiral */
+        .petal:nth-child(1) { width: 40px; height: 50px; transform: translate(-50%, -100%) rotate(0deg); z-index: 10; }
+        .petal:nth-child(2) { width: 50px; height: 60px; transform: translate(-50%, -100%) rotate(72deg); z-index: 9; }
+        .petal:nth-child(3) { width: 60px; height: 70px; transform: translate(-50%, -100%) rotate(144deg); z-index: 8; }
+        .petal:nth-child(4) { width: 70px; height: 80px; transform: translate(-50%, -100%) rotate(216deg); z-index: 7; }
+        .petal:nth-child(5) { width: 80px; height: 90px; transform: translate(-50%, -100%) rotate(288deg); z-index: 6; }
+        
+        .stem {
+            position: absolute;
+            width: 8px;
+            height: 200px;
+            background: linear-gradient(to bottom, #0a3d00, #051a00);
+            top: 80px;
+            left: 46px;
+            border-radius: 0 0 4px 4px;
+            z-index: 1;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 40px;
+            height: 20px;
+            background: #0a3d00;
+            border-radius: 20px 0;
+            top: 130px;
+            left: 50px;
+            transform: rotate(-20deg);
+        }
+
+        /* Animations */
+        .rose-wrapper {
+            animation: float 3s ease-in-out infinite;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
         }
 
-        /* Text Styling */
-        .message {
+        .text-box {
             position: absolute;
-            top: 15%;
+            top: -150px;
+            width: 300px;
+            left: -100px;
             text-align: center;
             color: #ff4d6d;
-            width: 100%;
-            z-index: 10;
         }
 
-        h1 { font-size: 4rem; margin: 0; text-shadow: 0 0 20px #ff0044; }
-        p { color: #ffb3c1; font-size: 1.5rem; }
+        h1 { font-size: 3rem; margin: 0; text-shadow: 0 0 15px #ff0044; }
 
-        /* Falling Petals (Particles) */
-        .petal {
+        /* Falling Petals */
+        .falling-petal {
             position: absolute;
             background: #ff0044;
-            border-radius: 150% 0 150% 0;
-            opacity: 0.7;
-            pointer-events: none;
+            border-radius: 50% 0 50% 0;
+            opacity: 0.6;
             animation: fall linear infinite;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+            0% { transform: translate(0, -10vh) rotate(0deg); }
+            100% { transform: translate(100px, 100vh) rotate(360deg); }
         }
 
-        #overlay {
+        #start-btn {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); display: flex; justify-content: center;
-            align-items: center; color: white; z-index: 100; cursor: pointer;
-            font-family: sans-serif; letter-spacing: 2px;
+            background: black; color: white; display: flex;
+            justify-content: center; align-items: center; z-index: 100;
+            cursor: pointer; font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
 
-    <div id="overlay" onclick="startApp()">
-        <h2>CLICK TO OPEN YOUR SURPRISE, AKSHI ✨</h2>
+<div id="start-btn" onclick="start()">❤️ Click for Akshi ❤️</div>
+
+<div class="container">
+    <div class="rose-wrapper">
+        <div class="text-box">
+            <h1>Happy Rose Day, Akshi</h1>
+            <p>I'll never fall in love until I found her...</p>
+        </div>
+        <div class="rose">
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="stem"></div>
+            <div class="leaf"></div>
+        </div>
     </div>
+</div>
 
-    <div class="message">
-        <h1>Happy Rose Day, Akshi</h1>
-        <p>"Until I Found Her..."</p>
-    </div>
+<audio id="music" loop>
+    <source src="https://www.mboxdrive.com/untilifoundher.mp3" type="audio/mpeg">
+</audio>
 
-    <div class="rose-container">
-        <img src="https://www.pngplay.com/wp-content/uploads/13/Rose-Flower-PNG-Images-HD.png" alt="Rose">
-    </div>
-
-    <audio id="bgSong" loop>
-        <source src="https://www.mboxdrive.com/untilifoundher.mp3" type="audio/mpeg">
-    </audio>
-
-    <script>
-        function startApp() {
-            document.getElementById('overlay').style.display = 'none';
-            document.getElementById('bgSong').play();
-            createPetals();
+<script>
+    function start() {
+        document.getElementById('start-btn').style.display = 'none';
+        document.getElementById('music').play();
+        
+        // Create falling petals
+        for(let i=0; i<30; i++) {
+            let p = document.createElement('div');
+            p.className = 'falling-petal';
+            p.style.width = Math.random()*15+5 + 'px';
+            p.style.height = p.style.width;
+            p.style.left = Math.random()*100 + 'vw';
+            p.style.animationDuration = Math.random()*3+2 + 's';
+            p.style.delay = Math.random()*5 + 's';
+            document.body.appendChild(p);
         }
+    }
+</script>
 
-        function createPetals() {
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const petal = document.createElement('div');
-                    petal.className = 'petal';
-                    
-                    const size = Math.random() * 15 + 10 + 'px';
-                    petal.style.width = size;
-                    petal.style.height = size;
-                    
-                    petal.style.left = Math.random() * 100 + 'vw';
-                    petal.style.animationDuration = Math.random() * 3 + 2 + 's';
-                    petal.style.opacity = Math.random();
-                    
-                    document.body.appendChild(petal);
-                    
-                    // Remove petal after animation
-                    setTimeout(() => petal.remove(), 5000);
-                }, i * 200);
-            }
-            // Keep generating petals
-            setInterval(createPetals, 10000);
-        }
-    </script>
 </body>
 </html>
