@@ -2,82 +2,60 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Rose Day 🌹</title>
+<title>Rose Day 🌹</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Aesthetic Font -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:'Playfair Display', serif;
 }
 
 body{
   height:100vh;
-  background: radial-gradient(circle at top,#ff5f8d,#a10035);
+  background:linear-gradient(180deg,#1a001a,#33001a);
+  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  overflow:hidden;
   color:white;
 }
 
-/* glass container */
-.container{
-  background:rgba(0,0,0,0.3);
-  padding:50px;
-  border-radius:25px;
-  text-align:center;
-  box-shadow:0 0 50px rgba(0,0,0,0.5);
+/* center heart */
+.heart{
+  font-size:160px;
+  color:#ff4d6d;
+  text-shadow:0 0 30px rgba(255,77,109,0.8);
+  animation:beat 1.2s infinite;
+  z-index:2;
 }
 
-/* title */
-h1{
-  font-size:3rem;
-  margin-bottom:30px;
-}
-h1 span{
-  color:#ffd1dc;
-}
-
-/* 3D rose */
-.scene{
-  width:200px;
-  height:200px;
-  margin:0 auto 30px;
-  perspective:800px;
-}
-
-.rose3d{
-  width:100%;
-  height:100%;
-  position:relative;
-  transform-style:preserve-3d;
-  animation:spin 6s linear infinite;
-  font-size:120px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-@keyframes spin{
-  0%{transform:rotateY(0deg) rotateX(0deg)}
-  100%{transform:rotateY(360deg) rotateX(360deg)}
+@keyframes beat{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.15)}
+  100%{transform:scale(1)}
 }
 
 /* text */
-#typing{
+.text{
+  position:absolute;
+  bottom:18%;
+  text-align:center;
   font-size:1.4rem;
-  line-height:1.8;
-  min-height:120px;
+  opacity:0.9;
+  z-index:2;
 }
 
-/* petals */
+/* rose particles */
 .petal{
   position:absolute;
-  top:-20px;
-  font-size:22px;
+  top:-30px;
+  font-size:24px;
   opacity:0.7;
   animation:fall linear infinite;
 }
@@ -87,73 +65,65 @@ h1 span{
     transform:translateY(110vh) rotate(360deg);
   }
 }
+
+/* tap overlay */
+#overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:1.6rem;
+  text-align:center;
+  cursor:pointer;
+  z-index:5;
+}
 </style>
 </head>
 
 <body>
 
-<!-- BACKGROUND MUSIC -->
-<audio id="bgMusic" autoplay loop>
+<!-- MUSIC -->
+<audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
-  <h1>Happy Rose Day <span>jasdh</span> 🌹</h1>
+<!-- TAP TO START -->
+<div id="overlay">
+  Tap anywhere ❤️<br>
+  to feel this moment
+</div>
 
-  <div class="scene">
-    <div class="rose3d">🌹</div>
-  </div>
+<!-- CENTER HEART -->
+<div class="heart">❤️</div>
 
-  <div id="typing"></div>
+<div class="text">
+  Happy Rose Day<br>
+  <strong>jasdh</strong> 🌹
 </div>
 
 <script>
-/* force autoplay */
-window.addEventListener("click",()=>{
-  const music=document.getElementById("bgMusic");
+/* start music */
+const overlay=document.getElementById("overlay");
+const music=document.getElementById("music");
+
+overlay.addEventListener("click",()=>{
   music.play();
+  overlay.style.display="none";
 });
 
-/* typing text */
-const lines=[
-  "Aaj Rose Day hai…",
-  "Rose sirf flower nahi hota.",
-  "Rose wo feeling hoti hai jo bina bole sab keh jaaye.",
-  "Aur tum, jasdh…",
-  "Tum meri favorite rose ho. 🌹❤️"
-];
-
-let i=0,j=0;
-const speed=45;
-const box=document.getElementById("typing");
-
-function type(){
-  if(i<lines.length){
-    if(j<lines[i].length){
-      box.innerHTML+=lines[i][j];
-      j++;
-      setTimeout(type,speed);
-    }else{
-      box.innerHTML+="<br><br>";
-      j=0;
-      i++;
-      setTimeout(type,600);
-    }
-  }
+/* rose rain */
+function createRose(){
+  const r=document.createElement("div");
+  r.className="petal";
+  r.innerHTML="🌹";
+  r.style.left=Math.random()*100+"vw";
+  r.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(r);
+  setTimeout(()=>r.remove(),8000);
 }
-type();
-
-/* falling petals */
-function petal(){
-  const p=document.createElement("div");
-  p.className="petal";
-  p.innerHTML="🌹";
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=(3+Math.random()*5)+"s";
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(),8000);
-}
-setInterval(petal,300);
+setInterval(createRose,250);
 </script>
 
 </body>
