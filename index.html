@@ -5,49 +5,67 @@
 <title>Rose Day 🌹</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Playfair Display', serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
   height:100vh;
-  background:linear-gradient(180deg,#1a001a,#33001a);
+  background:linear-gradient(180deg,#140014,#32001a);
   overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
   color:white;
+  font-family:'Playfair Display', serif;
 }
 
-/* center heart */
+/* heart */
 .heart{
-  font-size:170px;
+  font-size:180px;
   color:#ff4d6d;
-  text-shadow:0 0 35px rgba(255,77,109,0.9);
+  text-shadow:0 0 40px rgba(255,77,109,0.9);
   animation:beat 1.2s infinite;
   z-index:2;
 }
 
 @keyframes beat{
   0%{transform:scale(1)}
-  50%{transform:scale(1.18)}
+  50%{transform:scale(1.2)}
   100%{transform:scale(1)}
 }
 
-/* text */
+/* name */
 .text{
   position:absolute;
   bottom:18%;
   text-align:center;
-  font-size:1.5rem;
-  opacity:0.9;
+  font-size:1.6rem;
+  font-family:'Cormorant Garamond', serif;
+  letter-spacing:1px;
   z-index:2;
+}
+
+/* lyrics */
+.lyrics{
+  position:absolute;
+  top:10%;
+  width:100%;
+  text-align:center;
+  font-size:1.7rem;
+  font-family:'Cormorant Garamond', serif;
+  letter-spacing:1px;
+  opacity:0;
+  animation:lyricFade 6s infinite;
+  z-index:2;
+}
+
+@keyframes lyricFade{
+  0%{opacity:0;transform:translateY(10px)}
+  20%{opacity:1;transform:translateY(0)}
+  80%{opacity:1}
+  100%{opacity:0;transform:translateY(-10px)}
 }
 
 /* falling roses */
@@ -61,18 +79,16 @@ body{
 }
 
 @keyframes fall{
-  to{
-    transform:translateY(110vh) rotate(360deg);
-  }
+  to{transform:translateY(110vh) rotate(360deg);}
 }
 
-/* clickable rose (BIG) */
-.click-rose{
+/* clickable items */
+.item{
   position:absolute;
-  font-size:70px; /* BIG SIZE */
+  font-size:70px;
   cursor:pointer;
   z-index:3;
-  animation:pop 0.4s ease;
+  animation:pop 0.35s ease;
 }
 
 @keyframes pop{
@@ -80,16 +96,16 @@ body{
   to{transform:scale(1)}
 }
 
-/* tap overlay */
+/* overlay */
 #overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.85);
+  background:rgba(0,0,0,0.88);
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:1.6rem;
-  text-align:center;
+  font-size:1.7rem;
+  font-family:'Cormorant Garamond', serif;
   cursor:pointer;
   z-index:5;
 }
@@ -98,36 +114,55 @@ body{
 
 <body>
 
-<!-- MUSIC -->
 <audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- TAP TO START -->
-<div id="overlay">
-  Tap anywhere ❤️
-</div>
+<div id="overlay">Touch the moment ❤️</div>
 
-<!-- CENTER -->
+<div class="lyrics" id="lyrics"></div>
+
 <div class="heart">❤️</div>
 
 <div class="text">
   Happy Rose Day<br>
-  <strong>jasdh</strong> 🌹
+  <strong>jasdh</strong>
 </div>
 
 <script>
-/* music start */
 const overlay=document.getElementById("overlay");
 const music=document.getElementById("music");
+const lyricBox=document.getElementById("lyrics");
 
+/* lyrics (short & safe) */
+const lyricLines=[
+  "I never knew love until I found you",
+  "Every moment feels softer with you",
+  "This melody feels like home",
+  "You are my calm in every storm",
+  "In this song, I see you"
+];
+let l=0;
+
+function changeLyric(){
+  lyricBox.style.opacity=0;
+  setTimeout(()=>{
+    lyricBox.innerText=lyricLines[l];
+    lyricBox.style.opacity=1;
+    l=(l+1)%lyricLines.length;
+  },500);
+}
+changeLyric();
+setInterval(changeLyric,6000);
+
+/* start */
 overlay.addEventListener("click",()=>{
   music.play();
   overlay.style.display="none";
-  spawnRose();
+  spawnItems();
 });
 
-/* background rose rain */
+/* rose rain */
 function rain(){
   const r=document.createElement("div");
   r.className="petal";
@@ -137,24 +172,30 @@ function rain(){
   document.body.appendChild(r);
   setTimeout(()=>r.remove(),8000);
 }
-setInterval(rain,250);
+setInterval(rain,240);
 
-/* interactive big rose */
-function spawnRose(){
-  const rose=document.createElement("div");
-  rose.className="click-rose";
-  rose.innerHTML="🌹";
+/* interactive items */
+const emojis=["🌹","🎂","🍦","🧁"];
+
+function spawnItem(){
+  const item=document.createElement("div");
+  item.className="item";
+  item.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
 
   const size=70;
-  rose.style.left=Math.random()*(window.innerWidth-size)+"px";
-  rose.style.top=Math.random()*(window.innerHeight-size)+"px";
+  item.style.left=Math.random()*(window.innerWidth-size)+"px";
+  item.style.top=Math.random()*(window.innerHeight-size)+"px";
 
-  rose.addEventListener("click",()=>{
-    rose.remove();
-    spawnRose();
-  });
+  item.onclick=()=>{
+    item.remove();
+    spawnItem();
+  };
 
-  document.body.appendChild(rose);
+  document.body.appendChild(item);
+}
+
+function spawnItems(){
+  for(let i=0;i<10;i++) spawnItem();
 }
 </script>
 
