@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Rose Day Akshi Cutie🌹</title>
+<title>Rose Day 🌹</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
@@ -27,16 +27,16 @@ body{
 
 /* center heart */
 .heart{
-  font-size:160px;
+  font-size:170px;
   color:#ff4d6d;
-  text-shadow:0 0 30px rgba(255,77,109,0.8);
+  text-shadow:0 0 35px rgba(255,77,109,0.9);
   animation:beat 1.2s infinite;
   z-index:2;
 }
 
 @keyframes beat{
   0%{transform:scale(1)}
-  50%{transform:scale(1.15)}
+  50%{transform:scale(1.18)}
   100%{transform:scale(1)}
 }
 
@@ -45,7 +45,7 @@ body{
   position:absolute;
   bottom:18%;
   text-align:center;
-  font-size:1.4rem;
+  font-size:1.5rem;
   opacity:0.9;
   z-index:2;
 }
@@ -53,8 +53,8 @@ body{
 /* falling roses */
 .petal{
   position:absolute;
-  top:-30px;
-  font-size:24px;
+  top:-40px;
+  font-size:30px;
   opacity:0.7;
   pointer-events:none;
   animation:fall linear infinite;
@@ -66,10 +66,10 @@ body{
   }
 }
 
-/* clickable rose */
+/* clickable rose (BIG) */
 .click-rose{
   position:absolute;
-  font-size:40px;
+  font-size:70px; /* BIG SIZE */
   cursor:pointer;
   z-index:3;
   animation:pop 0.4s ease;
@@ -105,8 +105,7 @@ body{
 
 <!-- TAP TO START -->
 <div id="overlay">
-  Tap anywhere ❤️<br>
-  to feel this moment
+  Tap anywhere ❤️
 </div>
 
 <!-- CENTER -->
@@ -114,8 +113,7 @@ body{
 
 <div class="text">
   Happy Rose Day<br>
-  <strong>Akshi</strong> 🌹<br>
-  <small>(Tap the roses)</small>
+  <strong>jasdh</strong> 🌹
 </div>
 
 <script>
@@ -141,13 +139,13 @@ function rain(){
 }
 setInterval(rain,250);
 
-/* interactive rose */
+/* interactive big rose */
 function spawnRose(){
   const rose=document.createElement("div");
   rose.className="click-rose";
   rose.innerHTML="🌹";
 
-  const size=40;
+  const size=70;
   rose.style.left=Math.random()*(window.innerWidth-size)+"px";
   rose.style.top=Math.random()*(window.innerHeight-size)+"px";
 
